@@ -1,4 +1,3 @@
-student_count = 20
 @line_width = 50
 students = []
 
@@ -7,9 +6,14 @@ def print_header
 	p "----------------"
 end
 
-def print_x(students)
-  	students.each do |student|
-    	puts "#{student[:name]}, (#{student[:cohort]} cohort), #{student[:hobby]}".center(@line_width) if student[:name].start_with?("C") && student[:name].length < 12
+def print(students)
+	students.sort_by do |cohort|
+		cohort[:cohort]
+	end	
+	count = 0
+  	while count < students.length do 
+    	p "#{students[count][:name]}, (#{students[count][:cohort]} cohort), #{students[count][:hobby]}".center(@line_width) if students[count][:name].start_with?("C") && students[count][:name].length < 12
+		count = count + 1	
 	end
 end
 
@@ -19,21 +23,27 @@ end
 
 def input_students
 	p "Please enter the name of the student"
-	p "To finish, just hit return twice"
- 
+	# create an empty array
  	students = []
- 	name = gets.chomp
-
- 	
+ 	# get the first name
+ 	name = gets.chomp.capitalize
+ 	while !name.empty? do
+ 		# while the name is not empty, repeat this code
 		p "Please enter the Month of the Cohort"
-		cohort = gets.chomp.downcase.to_sym
-		cohort = :June if cohort.empty?		
+		# get cohort
+		cohort = gets.chomp.capitalize.to_sym
+		cohort = :June if cohort.empty?
+		# set June as default		
 		p "Please enter the Hobby of the student"	
-		hobby = gets.chomp.downcase.to_sym
-
+		# get hobby
+		hobby = gets.chomp.capitalize.to_sym
+		# add new values to array
 		students << {:name => name, :cohort => cohort, :hobby => hobby}
-		p "Now we have #{students.length} students"
-	
+		p "Now we have #{students.length} students"	
+		p "Please enter the name of another student, or press return to finish"
+		# get another name
+		name = gets.chomp.capitalize
+	end
 	students
 end	
 
@@ -42,5 +52,5 @@ end
 students = input_students
 
 print_header
-print_x(students)
+print(students)
 print_footer(students)
