@@ -42,7 +42,7 @@ def input_students
 		# get hobby
 		hobby = gets.gsub(/\n/, "").capitalize.to_sym
 		# add new values to array
-		students << {:name => name, :cohort => Date.parse(@cohort).strftime(format="%B").to_sym, :hobby => hobby}
+		students << {:name => name, :cohort => @cohort, :hobby => hobby}
 		if students.length == 1 
 			p "Now we have #{students.length} student" 
 			else p "Now we have #{students.length} students"
@@ -54,10 +54,7 @@ def input_students
 	students
 end	
 
-
-
 students = input_students
-
 print_header
 print(students)
 print_footer(students)
